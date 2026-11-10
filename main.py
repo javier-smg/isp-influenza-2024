@@ -1,5 +1,6 @@
 import csv
 import re
+import ssl
 from html.parser import HTMLParser
 from io import BytesIO
 from pathlib import Path
@@ -34,10 +35,21 @@ class EnlacesInformeParser(HTMLParser):
                 self.enlaces_pdf.append(enlace)
 
 
+def abrir_url(url: str, headers: dict[str, str] | None = None) -> bytes:
+    solicitud = Request(url, headers=headers or {"User-Agent": "Mozilla/5.0"})
+    try:
+        with urlopen(solicitud, timeout=30) as respuesta:
+            return respuesta.read()
+    except Exception as error:
+        if not isinstance(error, (ssl.SSLError, OSError)) and "CERTIFICATE_VERIFY_FAILED" not in str(error):
+            raise
+        context = ssl._create_unverified_context()
+        with urlopen(solicitud, context=context, timeout=30) as respuesta:
+            return respuesta.read()
+
+
 def descargar_texto(url: str) -> str:
-    solicitud = Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urlopen(solicitud, timeout=30) as respuesta:
-        return respuesta.read().decode("utf-8", errors="replace")
+    return abrir_url(url).decode("utf-8", errors="replace")
 
 
 def limpiar_entero(texto_num: str) -> int:
@@ -221,9 +233,15 @@ def obtener_enlace_pdf(url_informe: str) -> str:
 
     parser = EnlacesInformeParser()
     parser.feed(html)
-    enlaces = list(dict.fromkeys(urljoin(url_informe, enlace) for enlace in parser.enlaces_pdf))
+    enlaces = []
+    for enlace in parser.enlaces_pdf:
+        url_pdf = urljoin(url_informe, enlace)
+        if "codigo-etica-isp" in urlsplit(url_pdf).path.lower():
+            continue
+        enlaces.append(url_pdf)
+    enlaces = list(dict.fromkeys(enlaces))
     if not enlaces:
-        raise RuntimeError(f"No se encontró un enlace PDF en la página: {url_informe}")
+        raise RuntimeError(f"No se encontró un enlace PDF válido en la página: {url_informe}")
     return enlaces[0]
 
 
@@ -239,12 +257,14 @@ def procesar_informes_isp(
     for semana_esperada, url_informe in enlaces_semanales:
         try:
             url_pdf = obtener_enlace_pdf(url_informe)
-            with urlopen(Request(url_pdf, headers={"User-Agent": "Mozilla/5.0"}), timeout=30) as respuesta:
-                registro = procesar_pdf_rm(respuesta.read(), Path(urlsplit(url_pdf).path).name)
+            pdf_data = abrir_url(url_pdf)
+            registro = procesar_pdf_rm(pdf_data, Path(urlsplit(url_pdf).path).name)
         except Exception as error:
-            raise RuntimeError(
-                f"No se pudo descargar o procesar la semana {semana_esperada} ({url_informe})"
-            ) from error
+            print(
+                f"Advertencia: se omite la semana {semana_esperada} ({url_informe}) "
+                f"porque no se pudo descargar o procesar el informe: {error}"
+            )
+            continue
 
         semana = registro["semana_epidemiologica"]
         if registro["anio"] != anio or semana != semana_esperada:
@@ -259,6 +279,9 @@ def procesar_informes_isp(
             "semana_epidemiologica": semana,
             "total_influenza": registro["rm_total_influenza"],
         }
+
+    if not registros_por_semana:
+        raise RuntimeError(f"No se pudo descargar ni procesar ningún informe del año {anio}.")
 
     registros = sorted(
         registros_por_semana.values(),
