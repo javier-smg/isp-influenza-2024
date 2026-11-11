@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="620" viewBox="0 0 1100 620">
+<style>text{font-family:Arial,sans-serif;fill:#263238}.grid{stroke:#d9e0e5;stroke-width:1}.axis{stroke:#455a64;stroke-width:1.5}.serie{fill:none;stroke:#1565c0;stroke-width:3}.dato{fill:#1565c0}</style>
+<rect width="100%" height="100%" fill="white"/>
+<text x="550" y="32" text-anchor="middle" font-size="21">Casos de influenza por semana epidemiológica</text>
+<line class="grid" x1="80" y1="545.0" x2="1070" y2="545.0"/>
+<text x="68" y="550.0" text-anchor="end" font-size="12">0</text>
+<line class="grid" x1="80" y1="449.0" x2="1070" y2="449.0"/>
+<text x="68" y="454.0" text-anchor="end" font-size="12">138.16</text>
+<line class="grid" x1="80" y1="353.0" x2="1070" y2="353.0"/>
+<text x="68" y="358.0" text-anchor="end" font-size="12">276.32</text>
+<line class="grid" x1="80" y1="257.0" x2="1070" y2="257.0"/>
+<text x="68" y="262.0" text-anchor="end" font-size="12">414.48</text>
+<line class="grid" x1="80" y1="161.0" x2="1070" y2="161.0"/>
+<text x="68" y="166.0" text-anchor="end" font-size="12">552.64</text>
+<line class="grid" x1="80" y1="65.0" x2="1070" y2="65.0"/>
+<text x="68" y="70.0" text-anchor="end" font-size="12">690.8</text>
+<line class="axis" x1="80" y1="65" x2="80" y2="545"/>
+<line class="axis" x1="80" y1="545" x2="1070" y2="545"/>
+<text x="22" y="310.0" transform="rotate(-90 22 310.0)" text-anchor="middle" font-size="14">Casos</text>
+<text x="550.0" y="600" text-anchor="middle" font-size="14">Semana epidemiológica</text>
+<line class="grid" x1="80.0" y1="65" x2="80.0" y2="545"/>
+<text x="80.0" y="567" text-anchor="middle" font-size="11">1</text>
+<line class="grid" x1="157.6" y1="65" x2="157.6" y2="545"/>
+<text x="157.6" y="567" text-anchor="middle" font-size="11">5</text>
+<line class="grid" x1="235.3" y1="65" x2="235.3" y2="545"/>
+<text x="235.3" y="567" text-anchor="middle" font-size="11">9</text>
+<line class="grid" x1="312.9" y1="65" x2="312.9" y2="545"/>
+<text x="312.9" y="567" text-anchor="middle" font-size="11">13</text>
+<line class="grid" x1="390.6" y1="65" x2="390.6" y2="545"/>
+<text x="390.6" y="567" text-anchor="middle" font-size="11">17</text>
+<line class="grid" x1="468.2" y1="65" x2="468.2" y2="545"/>
+<text x="468.2" y="567" text-anchor="middle" font-size="11">21</text>
+<line class="grid" x1="545.9" y1="65" x2="545.9" y2="545"/>
+<text x="545.9" y="567" text-anchor="middle" font-size="11">25</text>
+<line class="grid" x1="623.5" y1="65" x2="623.5" y2="545"/>
+<text x="623.5" y="567" text-anchor="middle" font-size="11">29</text>
+<line class="grid" x1="701.2" y1="65" x2="701.2" y2="545"/>
+<text x="701.2" y="567" text-anchor="middle" font-size="11">33</text>
+<line class="grid" x1="778.8" y1="65" x2="778.8" y2="545"/>
+<text x="778.8" y="567" text-anchor="middle" font-size="11">37</text>
+<line class="grid" x1="856.5" y1="65" x2="856.5" y2="545"/>
+<text x="856.5" y="567" text-anchor="middle" font-size="11">41</text>
+<line class="grid" x1="934.1" y1="65" x2="934.1" y2="545"/>
+<text x="934.1" y="567" text-anchor="middle" font-size="11">45</text>
+<line class="grid" x1="1011.8" y1="65" x2="1011.8" y2="545"/>
+<text x="1011.8" y="567" text-anchor="middle" font-size="11">49</text>
+<line class="grid" x1="1070.0" y1="65" x2="1070.0" y2="545"/>
+<text x="1070.0" y="567" text-anchor="middle" font-size="11">52</text>
+<polyline class="serie" points="80.0,524.8 99.4,521.7 118.8,518.6 138.2,523.5 157.6,536.7 177.1,529.7 196.5,534.6 215.9,534.6 235.3,531.8 254.7,535.3 274.1,525.5 293.5,534.6 312.9,521.4 332.4,511.6 351.8,493.6 371.2,467.2 390.6,408.8 410.0,356.0 429.4,272.6 448.8,190.6 468.2,108.6 487.6,127.4 507.1,183.7 526.5,403.3 545.9,495.7 565.3,518.6 584.7,526.2 604.1,537.4 623.5,536.7 642.9,520.7 662.4,524.2 681.8,516.5 701.2,539.4 720.6,536.7 740.0,530.4 759.4,531.1 778.8,529.0 798.2,526.9 817.6,522.8 837.1,525.5 856.5,505.4 875.9,512.3 895.3,510.6 914.7,508.9 934.1,517.9 953.5,522.8 972.9,522.1 992.4,526.2 1011.8,506.1 1031.2,499.1 1050.6,521.4 1070.0,520.0"/>
+<circle class="dato" cx="80.0" cy="524.8" r="4"/>
+<circle class="dato" cx="99.4" cy="521.7" r="4"/>
+<circle class="dato" cx="118.8" cy="518.6" r="4"/>
+<circle class="dato" cx="138.2" cy="523.5" r="4"/>
+<circle class="dato" cx="157.6" cy="536.7" r="4"/>
+<circle class="dato" cx="177.1" cy="529.7" r="4"/>
+<circle class="dato" cx="196.5" cy="534.6" r="4"/>
+<circle class="dato" cx="215.9" cy="534.6" r="4"/>
+<circle class="dato" cx="235.3" cy="531.8" r="4"/>
+<circle class="dato" cx="254.7" cy="535.3" r="4"/>
+<circle class="dato" cx="274.1" cy="525.5" r="4"/>
+<circle class="dato" cx="293.5" cy="534.6" r="4"/>
+<circle class="dato" cx="312.9" cy="521.4" r="4"/>
+<circle class="dato" cx="332.4" cy="511.6" r="4"/>
+<circle class="dato" cx="351.8" cy="493.6" r="4"/>
+<circle class="dato" cx="371.2" cy="467.2" r="4"/>
+<circle class="dato" cx="390.6" cy="408.8" r="4"/>
+<circle class="dato" cx="410.0" cy="356.0" r="4"/>
+<circle class="dato" cx="429.4" cy="272.6" r="4"/>
+<circle class="dato" cx="448.8" cy="190.6" r="4"/>
+<circle class="dato" cx="468.2" cy="108.6" r="4"/>
+<circle class="dato" cx="487.6" cy="127.4" r="4"/>
+<circle class="dato" cx="507.1" cy="183.7" r="4"/>
+<circle class="dato" cx="526.5" cy="403.3" r="4"/>
+<circle class="dato" cx="545.9" cy="495.7" r="4"/>
+<circle class="dato" cx="565.3" cy="518.6" r="4"/>
+<circle class="dato" cx="584.7" cy="526.2" r="4"/>
+<circle class="dato" cx="604.1" cy="537.4" r="4"/>
+<circle class="dato" cx="623.5" cy="536.7" r="4"/>
+<circle class="dato" cx="642.9" cy="520.7" r="4"/>
+<circle class="dato" cx="662.4" cy="524.2" r="4"/>
+<circle class="dato" cx="681.8" cy="516.5" r="4"/>
+<circle class="dato" cx="701.2" cy="539.4" r="4"/>
+<circle class="dato" cx="720.6" cy="536.7" r="4"/>
+<circle class="dato" cx="740.0" cy="530.4" r="4"/>
+<circle class="dato" cx="759.4" cy="531.1" r="4"/>
+<circle class="dato" cx="778.8" cy="529.0" r="4"/>
+<circle class="dato" cx="798.2" cy="526.9" r="4"/>
+<circle class="dato" cx="817.6" cy="522.8" r="4"/>
+<circle class="dato" cx="837.1" cy="525.5" r="4"/>
+<circle class="dato" cx="856.5" cy="505.4" r="4"/>
+<circle class="dato" cx="875.9" cy="512.3" r="4"/>
+<circle class="dato" cx="895.3" cy="510.6" r="4"/>
+<circle class="dato" cx="914.7" cy="508.9" r="4"/>
+<circle class="dato" cx="934.1" cy="517.9" r="4"/>
+<circle class="dato" cx="953.5" cy="522.8" r="4"/>
+<circle class="dato" cx="972.9" cy="522.1" r="4"/>
+<circle class="dato" cx="992.4" cy="526.2" r="4"/>
+<circle class="dato" cx="1011.8" cy="506.1" r="4"/>
+<circle class="dato" cx="1031.2" cy="499.1" r="4"/>
+<circle class="dato" cx="1050.6" cy="521.4" r="4"/>
+<circle class="dato" cx="1070.0" cy="520.0" r="4"/>
+</svg>
