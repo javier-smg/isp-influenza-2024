@@ -2,6 +2,8 @@ import argparse
 import csv
 from pathlib import Path
 
+import matplotlib.pyplot as plt
+
 
 CAMPO_SEMANA = "semana_epidemiologica"
 CAMPO_TOTAL = "total_influenza"
@@ -74,88 +76,26 @@ def guardar_grafica(
     archivo_salida: Path,
     datos: dict[int, float],
 ) -> None:
-    ancho, alto = 1100, 620
-    margen_izquierdo, margen_derecho = 80, 30
-    margen_superior, margen_inferior = 65, 75
-    ancho_grafica = ancho - margen_izquierdo - margen_derecho
-    alto_grafica = alto - margen_superior - margen_inferior
     semanas = sorted(datos)
-    valores = [datos[semana] for semana in semanas]
-    maximo = max(valores)
-    escala_y = maximo * 1.1 if maximo > 0 else 1
-
-    def x(semana: int) -> float:
-        return margen_izquierdo + (
-            (semana - semanas[0]) / max(1, semanas[-1] - semanas[0])
-        ) * ancho_grafica
-
-    def y(valor: float) -> float:
-        return margen_superior + alto_grafica * (1 - valor / escala_y)
-
-    partes = [
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{ancho}" height="{alto}" '
-        f'viewBox="0 0 {ancho} {alto}">',
-        "<style>text{font-family:Arial,sans-serif;fill:#263238}"
-        ".grid{stroke:#d9e0e5;stroke-width:1}"
-        ".axis{stroke:#455a64;stroke-width:1.5}"
-        ".serie{fill:none;stroke:#1565c0;stroke-width:3}"
-        ".dato{fill:#1565c0}</style>",
-        '<rect width="100%" height="100%" fill="white"/>',
-        '<text x="550" y="32" text-anchor="middle" font-size="21">'
-        "Casos de influenza por semana epidemiológica</text>",
-    ]
-
-    divisiones_y = 5
-    for division in range(divisiones_y + 1):
-        valor = escala_y * division / divisiones_y
-        coordenada_y = y(valor)
-        partes.extend(
-            [
-                f'<line class="grid" x1="{margen_izquierdo}" y1="{coordenada_y:.1f}" '
-                f'x2="{ancho - margen_derecho}" y2="{coordenada_y:.1f}"/>',
-                f'<text x="{margen_izquierdo - 12}" y="{coordenada_y + 5:.1f}" '
-                f'text-anchor="end" font-size="12">{valor:g}</text>',
-            ]
-        )
-
-    partes.extend(
-        [
-            f'<line class="axis" x1="{margen_izquierdo}" y1="{margen_superior}" '
-            f'x2="{margen_izquierdo}" y2="{alto - margen_inferior}"/>',
-            f'<line class="axis" x1="{margen_izquierdo}" y1="{alto - margen_inferior}" '
-            f'x2="{ancho - margen_derecho}" y2="{alto - margen_inferior}"/>',
-            f'<text x="22" y="{alto / 2}" transform="rotate(-90 22 {alto / 2})" '
-            'text-anchor="middle" font-size="14">Casos</text>',
-            f'<text x="{ancho / 2}" y="{alto - 20}" text-anchor="middle" '
-            'font-size="14">Semana epidemiológica</text>',
-        ]
-    )
-
     semanas_etiquetadas = set(range(semanas[0], semanas[-1] + 1, 4))
     semanas_etiquetadas.update((semanas[0], semanas[-1]))
-    for semana in sorted(semanas_etiquetadas):
-        coordenada_x = x(semana)
-        partes.extend(
-            [
-                f'<line class="grid" x1="{coordenada_x:.1f}" y1="{margen_superior}" '
-                f'x2="{coordenada_x:.1f}" y2="{alto - margen_inferior}"/>',
-                f'<text x="{coordenada_x:.1f}" y="{alto - margen_inferior + 22}" '
-                f'text-anchor="middle" font-size="11">{semana}</text>',
-            ]
-        )
-
-    puntos = " ".join(
-        f"{x(semana):.1f},{y(datos[semana]):.1f}" for semana in semanas
+    valores = [datos[semana] for semana in semanas]
+    escala_y = max(valores) * 1.1 if max(valores) > 0 else 1
+    figura, eje = plt.subplots(figsize=(11, 6.2), dpi=100)
+    eje.bar(semanas, valores, width=0.8, color="#1565c0", zorder=3)
+    eje.set(
+        title="Casos de influenza por semana epidemiológica",
+        xlabel="Semana epidemiológica",
+        ylabel="Casos",
+        xlim=(semanas[0] - 0.5, semanas[-1] + 0.5),
+        ylim=(0, escala_y),
     )
-    partes.append(f'<polyline class="serie" points="{puntos}"/>')
-    for semana in semanas:
-        partes.append(
-            f'<circle class="dato" cx="{x(semana):.1f}" '
-            f'cy="{y(datos[semana]):.1f}" r="4"/>'
-        )
-
-    partes.append("</svg>")
-    archivo_salida.write_text("\n".join(partes), encoding="utf-8")
+    eje.set_xticks(sorted(semanas_etiquetadas))
+    eje.grid(axis="y", color="#d9e0e5", zorder=0)
+    eje.set_axisbelow(True)
+    figura.tight_layout()
+    figura.savefig(archivo_salida, format="png", facecolor="white")
+    plt.close(figura)
 
 
 def procesar_csv(
@@ -173,7 +113,7 @@ def procesar_csv(
 def main() -> None:
     carpeta = Path(__file__).resolve().parent
     parser = argparse.ArgumentParser(
-        description="Completa semanas faltantes del CSV y genera una gráfica SVG."
+        description="Completa semanas faltantes del CSV y genera una gráfica PNG."
     )
     parser.add_argument(
         "--entrada",
@@ -190,8 +130,8 @@ def main() -> None:
     parser.add_argument(
         "--grafica",
         type=Path,
-        default=carpeta / "influenza_rm_isp.svg",
-        help="Ruta de la gráfica SVG.",
+        default=carpeta / "influenza_rm_isp.png",
+        help="Ruta de la gráfica PNG.",
     )
     argumentos = parser.parse_args()
     cantidad = procesar_csv(
